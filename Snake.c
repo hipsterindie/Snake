@@ -13,7 +13,7 @@ int head = 0, tail = 0;
 int newhead;
 int i, j, fruitx, fruity, flag;
 int gameover, score;
-int x[1000], y[1000]; 
+int x, y; 
 void Draw();
 void Setup();
 void Input();
@@ -38,7 +38,7 @@ void Draw(){
                 printf("#");
             }
             else{
-                if (i == x[head] && j == y[head])
+                if (i == x && j == y)
                     printf("0");
                 else if (i == fruitx && j == fruity)
                     printf("*");
@@ -61,8 +61,8 @@ void Setup(){
     
     
     gameover = 0;
-    x[head] = HEIGHT/2;
-    y[head] = WIDTH/2;
+    x = HEIGHT/2;
+    y = WIDTH/2;
     label1:
       fruitx = rand()%25;
       if(fruitx==0)
@@ -97,35 +97,31 @@ void Input(){
 }
 
 void Logic(){
-    int newhead = (head + 1) % 1000;
-    x[newhead] = (x[head] + WIDTH) % WIDTH;
-    y[newhead] = (y[head] + HEIGHT) % HEIGHT;
-    head = newhead;
     //how the fuck can i stop that blinking seizure inducing
     Sleep(10);
     switch(flag){
     case 1:
-        y[head]--;
+        y--;
         break;
     case 2:
-        x[head]++;
+        x++;
         break;
     case 3:
-        y[head]++;
+        y++;
         break;
     case 4:
-        x[head]--;
+        x--;
         break;
     default:
         break;
     }
 
     //game is over
-    if(x[head]<0 || x[head]>HEIGHT || y[head]<0 || y[head]>WIDTH)
+    if(x<0 || x>HEIGHT || y<0 || y>WIDTH)
         gameover=1;
     //snake reaches the fruit, update score
     //maybe make snek longer?? how???
-    if(x[head]==fruitx && y[head]==fruity){
+    if(x==fruitx && y==fruity){
         label3:
           fruitx=rand()%25;
           if(fruitx==0)
